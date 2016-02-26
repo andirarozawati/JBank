@@ -1,6 +1,7 @@
 #BlueJ class context
 comment0.params=args
 comment0.target=void\ main(java.lang.String[])
+comment0.text=\r\n\ method\ main\r\n\ membuat\ object\ akun\ a1\ \r\n\ membuat\ object\ customer\ c1\r\n
 comment1.params=
 comment1.target=Teller()
 numComments=2
