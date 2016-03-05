@@ -11,14 +11,17 @@ public class Bank
     private static double creditInterestRate ;
     private static String closeTime;
     private static double investmentInterestRate;
-    private static int lastCustID, numOfCurrentCustomer;
-    private static int nextID, nextCustID;
+    private static int lastCustID = 1000, numOfCurrentCustomer;
+    private static int nextID, nextCustID = 1000;
     private static String phone;
     public static String website;
-    public static String bankAddress = "1234 JavaStreet, AnyCity, ThisState,34567";
+    public static String Address = "1234 JavaStreet, AnyCity, ThisState,34567";
     public static int maxNumOfCustomers = 20;
-    public static String bankName = "JBANK";
-    
+    public static String Name = "JBANK";
+   
+   
+  
+     
     public Bank()
     {
        
@@ -27,10 +30,12 @@ public class Bank
     /**
      * method untuk mendapatkan get address
      */
-    public static String getAddress()
+    
+    /*public static String getAddress()
     {
         return "";
     }
+   */
     
     /**
      * method untuk mendapatkan get credit rate
@@ -67,37 +72,56 @@ public class Bank
     /**
      * method untuk mendapatkan maximun customer
      */
-    public static int getMaxCustomers()
+    
+    /*public static int getMaxNumOfCustomers()
     {
         return 0;
     }
+    */
+ 
     
     /**
      * method untuk mendapatkan nama customer
      */
-    public static String getName()
+    
+    /*public static String getName()
     {
         return null;
     }
-    
+    */
+   
     /**
      * method untuk mendapatkan nextID
      * @return nextCustID
      */
     public static int getNextID ()
     {
+       int NextCustIDs;
+        NextCustIDs = nextCustID;
         if (nextCustID == 0)  //cek apakah nextCustID bernilai 0
         {
+           
+            
             lastCustID = 1000; //mulai perhitungan lastCustID
-            nextCustID = 1000; //mulai perhitungan nextCustID
-            return nextCustID;
+            numOfCurrentCustomer = numOfCurrentCustomer;
+            
+            return NextCustIDs;
         }
-        else 
-        {
+        
+        else if ( numOfCurrentCustomer == maxNumOfCustomers)
+        {//cek apakah cutomer sudah memiliki max account
+         
+            return 0;
+        }
+        
+        else if (nextCustID != 0)
+        {//apabil customer masih bisa memiliki akun
             lastCustID = nextCustID; // lastCustID jadi acuan nextCustID
-            nextCustID = lastCustID + 1;// perhitungan nextCustID
-            return nextCustID;
+            nextCustID += 1;// perhitungan nextCustID
+           
+            numOfCurrentCustomer += 1;
         }
+        return NextCustIDs;
     }
     
     /**

@@ -14,7 +14,7 @@ public class Customer
 {
     private Account accounts = new Account();
     private String cityAddress;
-    private int custId;
+    public int custID;
     private String dateOfBirth;
     private String email;
     private String firstName;
@@ -25,7 +25,7 @@ public class Customer
     private String phoneNumber;
     private String zipOrPostalCode;
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     
     /**
      * constructor object class
@@ -41,9 +41,9 @@ public class Customer
      * @param lname last name customer
      * @param dob date of birth customer
      */
-    public Customer(String fname, String lname, String dob)
+    public Customer(String firstName, String lastName)
     {
-      
+      this(firstName,lastName,null);
     }
     
     /**
@@ -53,9 +53,12 @@ public class Customer
      * @param dob date of birth customer
      * @param custId id customer
      */
-    public Customer(String firstName, String lastName, String dateOfBirth, int custId)
+    public Customer(String firstName, String lastName, String dateOfBirth)
     {
-   
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        custID = Bank.getNextID();
     }
     
     /**
@@ -76,6 +79,11 @@ public class Customer
         return accounts;
     }
     
+    public void setCustID(int id)
+    {
+        custID = id;
+    }    
+    
     /**
      * untuk assign update jumlah akun customer
      * @param akun milik customer
@@ -89,9 +97,9 @@ public class Customer
      * untuk mendapatkan ID customer 
      * @return custID nilai id 
      */
-    public int getCustomer()
+    public int getCustID()
     {
-        return custId;
+        return custID;
     }
     
     /**
@@ -181,5 +189,13 @@ public class Customer
         this.phoneNumber = phoneNum;
     }
     
+    public void setDateOfBirth(String dob)
+    {
+        this.dateOfBirth = dob ;
+    }
     
+     public String DateOfBirth()
+    {
+        return dateOfBirth;
+    }
 }

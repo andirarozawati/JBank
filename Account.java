@@ -17,7 +17,8 @@ public class Account
      */
     public Account()
     {
-        
+        acctType = 'S';
+        balance = 10.00;
     }
     
     /**
@@ -27,7 +28,8 @@ public class Account
      */
     public Account (char type, double amount)
     {
-      
+      acctType = type;
+      balance = amount;
     }
    
     /**
@@ -47,7 +49,6 @@ public class Account
         }
     }
     
- 
     
     /**
      * method untuk mendapatkan tipe akun customer
