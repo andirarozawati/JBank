@@ -47,7 +47,7 @@ public class Teller
        String fname, lname, dob, no_tlp, answer;
        
         //mulai pendataan new customer
-        System.out.println("Selamat datang di JBank! Apakah anda ingin mendafinputtar menjadi customer kami? ('yes'/'no') ? ");
+        System.out.println("Selamat datang di JBank! Apakah anda ingin mendaftar menjadi customer kami? ('yes'/'no') ? ");
         answer = input.nextLine();//scan input
         if (!answer.equals("yes"))//apabila jawaban yes
         {
