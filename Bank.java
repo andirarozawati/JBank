@@ -1,4 +1,4 @@
-
+import java.util.Date;
 /**
  * kelas bank yang akan menghasilkan object customer
  * 
@@ -9,7 +9,8 @@ public class Bank
 {
     // instance variables - replace the example below with your own
     private static double creditInterestRate ;
-    private static String closeTime;
+    private static Date closeTime;
+    private static Date startTime;
     private static double investmentInterestRate;
     private static int lastCustID = 1000, numOfCurrentCustomer;
     private static int nextID, nextCustID = 1000;
@@ -17,7 +18,7 @@ public class Bank
     public static String website;
     public static String Address = "1234 JavaStreet, AnyCity, ThisState,34567";
     public static int maxNumOfCustomers = 20;
-    public static String Name = "JBANK";
+    public static final String Name = "JBANK";
    
    
   
@@ -44,6 +45,7 @@ public class Bank
     {
         return 0;
     }
+    
     
     /**
      * method untuk mendapatkan get investement rate
@@ -177,6 +179,26 @@ public class Bank
      * method untuk assign premium 
      */
     public static void setPremium (double rate)
+    {
+        
+    }
+    
+    public Date getStartTime()
+    {
+        return startTime;
+    }
+    
+    public void setStartTime()
+    {
+        
+    }
+    
+    public Date getCloseTime()
+    {
+        return closeTime;
+    }
+    
+    public void setCloseTime()
     {
         
     }

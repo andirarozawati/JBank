@@ -8,6 +8,9 @@
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 
 public class Customer
@@ -15,7 +18,7 @@ public class Customer
     private Account accounts = new Account();
     private String cityAddress;
     public int custID;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String email;
     private String firstName;
     private String lastName;
@@ -24,6 +27,8 @@ public class Customer
     private String streetAddress;
     private String phoneNumber;
     private String zipOrPostalCode;
+    private Date date;
+    
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     
@@ -39,7 +44,7 @@ public class Customer
      * method contructor customer
      * @param fname first name customer
      * @param lname last name customer
-     * @param dob date of birth customer
+     * 
      */
     public Customer(String firstName, String lastName)
     {
@@ -53,7 +58,7 @@ public class Customer
      * @param dob date of birth customer
      * @param custId id customer
      */
-    public Customer(String firstName, String lastName, String dateOfBirth)
+    public Customer(String firstName, String lastName, Date dateOfBirth)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -116,9 +121,10 @@ public class Customer
      * @return nama lengkap customer
      */
     public String getName()
-    {
-        return lastName + "," + firstName;
+    {    
+      return lastName + " " + firstName + "," + dateOfBirth;
     }
+    
     
     /**
      * method untuk mendapatkan banyakya account seorang customer
@@ -177,9 +183,10 @@ public class Customer
     {
         this.lastName = lname;
         this.firstName = fname;
+        
     }
     
-     
+    
     /**
      * method set no telepon customer
      * @return phoneNum telepon customer
@@ -189,13 +196,16 @@ public class Customer
         this.phoneNumber = phoneNum;
     }
     
-    public void setDateOfBirth(String dob)
+    public void setDateOfBirth(Date dateOfBirth)
     {
-        this.dateOfBirth = dob ;
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyy");
+       
     }
     
-     public String DateOfBirth()
+     public Date getDateOfBirth(Date dateOfBirth)
     {
+        String dateToStr = DateFormat.getInstance().format(date);
         return dateOfBirth;
     }
 }
