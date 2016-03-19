@@ -248,4 +248,10 @@ public class Bank
         
     }
     
+     public void printAllCustomers() {
+        for (Customer c : Customers) {
+            if (c!=null)
+                System.out.println(c);
+        }
+    }
 }

@@ -6,28 +6,32 @@
  * @version 27/02/2016
  */
 
+
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
+import java.text.*;
+import java.io.*;
 
 
 public class Customer
 {
     private Account[] accounts = new Account[4];
+    private Account a;
     private String cityAddress;
     public int custID;
     private Account type;
-    private Date dateOfBirth;
+    private Date dob;
     private String email;
     private String firstName;
     private String lastName;
     private String cityName;
-    private int numberOfCurrentAccounts;
+    private int accountsIndexArray = 0;
+    private int numberOfCurrentAccounts,ind;
     private String streetAddress;
     private String phoneNumber;
     private String zipOrPostalCode;
+    private Boolean check;
     private Date date;
     
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -41,6 +45,7 @@ public class Customer
         
     }
     
+   
     /**
      * method contructor customer
      * @param fname first name customer
@@ -59,14 +64,15 @@ public class Customer
      * @param dob date of birth customer
      * @param custId id customer
      */
-    public Customer(String firstName, String lastName, Date dateOfBirth)
+    public Customer(String firstName, String lastName, Date dob)
     {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
+        this.dob = dob;
         custID = Bank.getNextID();
     }
     
+     
     /**
      * untuk mendapatkan alamat customer
      * @return alamat nama dan postalcode customer
@@ -80,15 +86,39 @@ public class Customer
      * mendapatkan alamat customer
      * @return all account customer
      */
-    public Account getAccount(char tipe)
+    public Account getAccount(char type)
     {
-        for (Account type : accounts)
+        for (Account a : accounts)
         {
-            if (type.getAcctType()==tipe){
-                return type;
+            if (a.getAcctType()==type){
+                return a;
             }
         }   
         return null;
+    }
+    
+     public boolean addAccount(double balance, char type) {
+        boolean accountAdded = false, sameType = false;
+        int index = -1;
+        if ( numberOfCurrentAccounts < 5 ) {
+            for (int i = accountsIndexArray; i < 4; i++) {
+                if (accounts[i] == null && index == -1) {
+                    index = i;
+                } else if (accounts[i] != null ) {
+                    if (accounts[i].getId().endsWith( Character.toString(type) ) ) {
+                        sameType = true;
+                        break;
+                    }
+                }
+            }
+            if (!sameType && index != -1){
+                accounts[index] = new Account (this, balance, type);
+                accountAdded = true;
+                numberOfCurrentAccounts++;
+                accountsIndexArray++;
+            }
+        }
+        return accountAdded;
     }
     
     public void setCustID(int id)
@@ -132,7 +162,7 @@ public class Customer
      */
     public String getName()
     {    
-      return lastName + " " + firstName + "," + dateOfBirth;
+      return lastName + " " + firstName + "," + dob;
     }
     
     
@@ -218,4 +248,60 @@ public class Customer
         String dateToStr = DateFormat.getInstance().format(date);
         return dateOfBirth;
     }
+    
+      public String toString() {
+        SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");
+        System.out.println("First Name    :   " + firstName);
+        System.out.println("Last Name     :   " + lastName);
+        System.out.println("Customer ID   :   " + custID);
+        System.out.println("Email         :   " + email);
+        System.out.println("City Address  :   " + cityAddress);
+        System.out.println("Stret Address :   " + streetAddress);
+        System.out.println("Phone Number  :   " + phoneNumber);
+        System.out.println("Zip / Postal  :   " + zipOrPostalCode);
+        System.out.println("Tempat,Tanggal Lahir         :   " + ft.format(dob));
+        System.out.println("Account       :");
+        for (Account a : accounts) {
+            if ( a!= null) {
+                switch (a.getAcctType()) {
+                    case 'S': System.out.println("          SAVINGS, " + a.getBalance());
+                              break;
+                    case 'O': System.out.println("          OVERDRAFT, " + a.getBalance());
+                              break;
+                    case 'I': System.out.println("          INVESTMENT, " + a.getBalance());
+                              break;
+                    case 'L': System.out.println("          LINEOFCREDIT, " + a.getBalance());
+                              break;
+                    default : System.out.println("          Belum Membuat");
+                }
+            }
+        }
+        return "";
+        
+    }
+      public boolean removeAccount(char type)
+   {
+       boolean accountRemoved = false;
+        for (int x = 0; x <= 3; x++) 
+        {
+            if ( accounts[x].getAcctType() == type) 
+            {
+                accounts[x] = null;
+                accountsIndexArray--;
+                numberOfCurrentAccounts--;
+                accountRemoved = true;
+            }
+            
+            if (accounts[x] == null && accountRemoved) 
+            {
+                if ( x != 3) 
+                {
+                    a = accounts[x];
+                    accounts[x] = accounts [x+1];
+                    accounts [x+1] = a;
+                }
+            }
+        }
+       return accountRemoved;
+   }
 }
