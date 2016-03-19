@@ -15,9 +15,10 @@ import java.text.DateFormat;
 
 public class Customer
 {
-    private Account accounts = new Account();
+    private Account[] accounts = new Account[4];
     private String cityAddress;
     public int custID;
+    private Account type;
     private Date dateOfBirth;
     private String email;
     private String firstName;
@@ -79,9 +80,15 @@ public class Customer
      * mendapatkan alamat customer
      * @return all account customer
      */
-    public Account getAccount()
+    public Account getAccount(char tipe)
     {
-        return accounts;
+        for (Account type : accounts)
+        {
+            if (type.getAcctType()==tipe){
+                return type;
+            }
+        }   
+        return null;
     }
     
     public void setCustID(int id)
@@ -89,14 +96,17 @@ public class Customer
         custID = id;
     }    
     
+    /*
     /**
      * untuk assign update jumlah akun customer
      * @param akun milik customer
      */
-    public void setAccount(Account akun)
+    /*
+    public void setAccount(Account accounts)
     {
       accounts = akun;
     }
+    */
     
     /**
      * untuk mendapatkan ID customer 

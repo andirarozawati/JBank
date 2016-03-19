@@ -15,10 +15,19 @@ public class Account
    /**
      * constructur kelass account
      */
-    public Account()
+    public Account(Customer customer,double amount,char tipe)
     {
-        acctType = 'S';
-        balance = 10.00;
+        acctType = tipe;
+        balance = amount;
+        id = customer.getCustID()+" "+ tipe;
+    }
+    
+    public String toString()
+    {
+      System.out.println("Tipe Akun = "+acctType);
+      System.out.println("ID = "+id);
+      System.out.println("Saldo = "+balance);
+      return "";  
     }
     
     /**
@@ -86,15 +95,18 @@ public class Account
         this.balance = amount;
     }
     
+    /*
     /**
      * method untuk assign ID customer
      * @param accId ID dari akun 
      */
+    /*
     public void setID (String acctId)
     {
         this.id = acctId;
     }
-    
+    */
+   
     /**
      * method untuk assign tipe akun customer
      * @param type tipe akun

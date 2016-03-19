@@ -1,4 +1,7 @@
 import java.util.Date;
+import java.text.*;
+import java.util.*;
+import java.io.*;
 /**
  * kelas bank yang akan menghasilkan object customer
  * 
@@ -17,17 +20,56 @@ public class Bank
     private static String phone;
     public static String website;
     public static String Address = "1234 JavaStreet, AnyCity, ThisState,34567";
-    public static int maxNumOfCustomers = 20;
+    private static final int MAX_NUM_OF_CUSTOMERS;
     public static final String Name = "JBANK";
-   
-   
   
+   
+    static
+    {
+        Scanner s = new Scanner (System.in);
+        System.out.println("Maksimum Customer =  ");
+        int x = s.nextInt();
+        for (int i=0;i<x;i++)
+        {
+            System.out.println("Customer" +i);
+            Customer[] cArray = new Customer[i];
+        }
+        
+        MAX_NUM_OF_CUSTOMERS = x;
+        System.out.println ("Maksimum: " +MAX_NUM_OF_CUSTOMERS);   
+        
+    }
+   
+    private static Customer[] Customers = new Customer[MAX_NUM_OF_CUSTOMERS];
      
     public Bank()
     {
        
     }
    
+    public static boolean addCustomer (Customer customer)
+    {
+        for (int i = 0; i<Customers.length; i++)
+        { if (Customers[i] == null){
+              Customers[i] = customer;
+              return true;
+            
+        }       
+    }
+     return false;
+}
+
+    public static Customer getCustomer (int custID)
+    {
+          for (int i = 0; i<Customers.length; i++)
+          {
+              if (Customers[i].getCustID() == custID)
+              {
+                  return Customers[i];
+              }
+          }
+          return null;
+    }
     /**
      * method untuk mendapatkan get address
      */
@@ -38,9 +80,11 @@ public class Bank
     }
    */
     
+  
     /**
      * method untuk mendapatkan get credit rate
      */
+    
     public static double getCreditRate ()
     {
         return 0;
@@ -73,13 +117,14 @@ public class Bank
     
     /**
      * method untuk mendapatkan maximun customer
+     * @return nilai int MAX_NUM_OF_CUSTOMERS
      */
     
-    /*public static int getMaxNumOfCustomers()
+    public static int getMaxNumOfCustomers()
     {
-        return 0;
+        return MAX_NUM_OF_CUSTOMERS;
     }
-    */
+    
  
     
     /**
@@ -110,7 +155,7 @@ public class Bank
             return NextCustIDs;
         }
         
-        else if ( numOfCurrentCustomer == maxNumOfCustomers)
+        else if ( numOfCurrentCustomer == MAX_NUM_OF_CUSTOMERS)
         {//cek apakah cutomer sudah memiliki max account
          
             return 0;
