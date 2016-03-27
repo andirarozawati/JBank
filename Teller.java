@@ -17,7 +17,7 @@ import java.math.*;
 public class Teller
 {
     
-    private Account[] a1 = new Account [4];
+    public Account[] a1 = new Account [4];
     private String fullname;
     private String firstName;
     private String lastName;
@@ -28,8 +28,27 @@ public class Teller
     public static Date stm, ctm;
     private static MathContext mc = new MathContext(5), mc1 = new MathContext(2);
     
-  public static void main(String[] args) {
-       Bank b = new Bank();
+    /**
+     * Main method dari class Teller yang berusaha membuat object meng-assign object a1 ke c1
+     * mengisi nilai balance dan nama lalu menampilkan keduanya.
+     * @param args Command-Line Arguments
+     */
+    public static void main(String[] args) {
+        Customer c = new Customer("Andira","R");
+        Savings s = new Savings(c,500);
+        s.addDailyInterest(280);
+        Investment i = new Investment(c, 1000, 12);
+        i.addDailyInterest(280);
+        OverDraftProtect o = new OverDraftProtect(c, 1500, s);
+        LineOfCredit l = new LineOfCredit (c, 3000, 1000);
+       
+          
+        }
+       
+  /*  
+  public static void main()
+  {
+  Bank b = new Bank();
        Scanner s = new Scanner(System.in);
        String input = "",fname,lname,no_telp,address,city,email,zip;
        int year = GregorianCalendar.YEAR; 
@@ -133,17 +152,22 @@ public class Teller
        }
        
        if (c!= null) {
-            b.printAllCustomers();
-            c = Bank.getCustomer(1000);
-            Account acc = new Account(c,1000,'C');
-            System.out.println("Account Type: " + acc.getAcctType());
-            System.out.println("Balance     : " + acc.getBalance());
-            System.out.println("ID          : " + acc.getId());
+           SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");
+        System.out.println("First Name    :   " + fname);
+        System.out.println("Last Name     :   " + lname);
+        System.out.println("Customer ID   :   " + Bank.getNextID());
+        System.out.println("Email         :   " + email);
+        System.out.println("City Address  :   " + city);
+        System.out.println("Stret Address :   " + address);
+        System.out.println("Phone Number  :   " + no_telp);
+        System.out.println("Zip / Postal  :   " + zip);
+        System.out.println("Tempat,Tanggal Lahir         :   " + ft.format(dob));
+        System.out.println("Account       :"+acctType);
+        System.out.println("Saldo         : " +balance);
+        
         }
-       
     }
-    
-
+    */
     
    public Teller()
     {

@@ -19,7 +19,7 @@ public class Customer
     private Account[] accounts = new Account[4];
     private Account a;
     private String cityAddress;
-    public int custID;
+    public double custID;
     private Account type;
     private Date dob;
     private String email;
@@ -82,10 +82,12 @@ public class Customer
         return streetAddress+cityName+zipOrPostalCode;
     }
     
+    /*
     /**
      * mendapatkan alamat customer
      * @return all account customer
      */
+    /*
     public Account getAccount(char type)
     {
         for (Account a : accounts)
@@ -96,7 +98,8 @@ public class Customer
         }   
         return null;
     }
-    
+    */
+   /*
      public boolean addAccount(double balance, char type) {
         boolean accountAdded = false, sameType = false;
         int index = -1;
@@ -120,6 +123,7 @@ public class Customer
         }
         return accountAdded;
     }
+    */
     
     public void setCustID(int id)
     {
@@ -142,7 +146,7 @@ public class Customer
      * untuk mendapatkan ID customer 
      * @return custID nilai id 
      */
-    public int getCustID()
+    public double getCustID()
     {
         return custID;
     }
@@ -248,7 +252,7 @@ public class Customer
         String dateToStr = DateFormat.getInstance().format(date);
         return dateOfBirth;
     }
-    
+    /*
       public String toString() {
         SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");
         System.out.println("First Name    :   " + firstName);
@@ -279,6 +283,9 @@ public class Customer
         return "";
         
     }
+    */
+   
+   /*
       public boolean removeAccount(char type)
    {
        boolean accountRemoved = false;
@@ -303,5 +310,5 @@ public class Customer
             }
         }
        return accountRemoved;
-   }
+   }*/
 }

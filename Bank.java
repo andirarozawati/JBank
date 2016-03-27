@@ -141,9 +141,9 @@ public class Bank
      * method untuk mendapatkan nextID
      * @return nextCustID
      */
-    public static int getNextID ()
+    public static double getNextID ()
     {
-       int NextCustIDs;
+       double NextCustIDs;
         NextCustIDs = nextCustID;
         if (nextCustID == 0)  //cek apakah nextCustID bernilai 0
         {
