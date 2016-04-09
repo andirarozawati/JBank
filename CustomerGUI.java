@@ -153,7 +153,6 @@ public class CustomerGUI extends JFrame {
         textfield9.setText("Email Address");
         textfield9.setVisible(true);
 
-        //adding components to contentPane panel
         contentPane.add(button1);
         contentPane.add(button3);
         contentPane.add(editorpane2);
@@ -168,7 +167,7 @@ public class CustomerGUI extends JFrame {
         contentPane.add(textfield8);
         contentPane.add(textfield9);
 
-        //adding panel to JFrame and seting of window position and close operation
+        
         this.add(contentPane);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);

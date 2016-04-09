@@ -1,6 +1,4 @@
-/**
-*Text genereted by Simple GUI Extension for BlueJ
-*/
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -162,7 +160,7 @@ public class ATMGUI extends JFrame {
 		contentPane.add(textfield1);
 		contentPane.add(textfield2);
 
-		//adding panel to JFrame and seting of window position and close operation
+		
 		this.add(contentPane);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
