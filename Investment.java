@@ -67,7 +67,7 @@ public class Investment extends Savings
       balance = f;
     }
 
-    public boolean withdraw(double amount)
+    public void withdraw (double amount) throws AmountOverDrawnException
     {
      if (balance - amount > 100)
      {
@@ -76,13 +76,13 @@ public class Investment extends Savings
              {
                  balance *=0.8;
                  balance -=amount;
-                 return true;
+                 
                 }
               else 
-              {return false;
+              {throw new AmountOverDrawnException (this);
                 }              
-    }else{ return false;}
+    }else{ throw new AmountOverDrawnException (this);}
     }
-    else{ return false;}
+    else{ throw new AmountOverDrawnException (this);}
 }
 }

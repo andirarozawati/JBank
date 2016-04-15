@@ -82,13 +82,13 @@ public class Customer
         return streetAddress+cityName+zipOrPostalCode;
     }
     
-    /*
+    
     /**
      * mendapatkan alamat customer
      * @return all account customer
      */
-    /*
-    public Account getAccount(char type)
+    
+    public Account getAccount(char type) throws AccountTypeAlreadyExistsException
     {
         for (Account a : accounts)
         {
@@ -98,9 +98,10 @@ public class Customer
         }   
         return null;
     }
-    */
-   /*
-     public boolean addAccount(double balance, char type) {
+    
+   
+     public boolean addAccount(Account acct)throws AccountTypeAlreadyExistsException
+     {
         boolean accountAdded = false, sameType = false;
         int index = -1;
         if ( numberOfCurrentAccounts < 5 ) {
@@ -108,14 +109,14 @@ public class Customer
                 if (accounts[i] == null && index == -1) {
                     index = i;
                 } else if (accounts[i] != null ) {
-                    if (accounts[i].getId().endsWith( Character.toString(type) ) ) {
+                    if (accounts[i].getClass().equals(acct.getClass() )) {
                         sameType = true;
                         break;
                     }
                 }
             }
             if (!sameType && index != -1){
-                accounts[index] = new Account (this, balance, type);
+                accounts[index] = acct;
                 accountAdded = true;
                 numberOfCurrentAccounts++;
                 accountsIndexArray++;
@@ -123,7 +124,7 @@ public class Customer
         }
         return accountAdded;
     }
-    */
+    
     
     public void setCustID(int id)
     {

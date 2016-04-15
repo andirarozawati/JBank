@@ -14,6 +14,7 @@ public abstract class Account
     protected double balance;
     protected String id;
     protected static MathContext mc = new MathContext(5);
+    protected char acctType;
    
     /*
    /**
@@ -26,10 +27,10 @@ public abstract class Account
         balance = amount;
         id = customer.getCustID()+" "+ tipe;
     }
-    */
+ */
     public String toString()
     {
-      /*System.out.println("Tipe Akun = "+acctType);*/
+     /* System.out.println("Tipe Akun = "+acctType);*/
       System.out.println("ID = "+id);
       System.out.println("Saldo = "+balance);
       return "";  
@@ -64,17 +65,17 @@ public abstract class Account
         }
     }
     
-    /*
+    
     /**
      * method untuk mendapatkan tipe akun customer
      * @return tipe akun
      */
-    /*
+    
     public char getAcctType()
     {
         return acctType;
     }
-    */
+    
    
     /**
      * method untuk mendapatkan nilai balance customer
@@ -130,7 +131,7 @@ public abstract class Account
     /**
      * method untuk customer mengambil uang
      */
-    public abstract boolean withdraw (double amount);
+    public abstract void withdraw (double amount) throws AmountOverDrawnException ;
     
       public static double nilai(double saldo, double rate, double compound, double period)
     {

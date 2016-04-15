@@ -17,12 +17,14 @@ public class Savings extends Account
     // instance variables - replace the example below with your own
     
     protected double interestEarned;
-   
+    protected char acctType;
+    
     /**
      * Method Constructor dari Savings
      * @param cust customer account
      * @param amount saldo yang ingin di input
      */
+    
     public Savings (Customer cust, double amount)
     {
       super();
@@ -31,7 +33,9 @@ public class Savings extends Account
      
       
     }
-    
+   
+   
+  
     
     public double getInterestEarned()
     {
@@ -42,17 +46,17 @@ public class Savings extends Account
      * Method withdraw Mengambil uang dari account savings 
      * @param amount jumlah saldo yang akan diambil 
      */
-    public boolean withdraw(double amount)
+    public void withdraw (double amount) throws AmountOverDrawnException
     {
          
         if (balance - amount < 0)//cek nilai withdraw apakah akan menghasilkan deposit yang negatif
         {
-            return false;
+            throw new AmountOverDrawnException (this);
         } 
         else 
         {//mengurangi balance saat withdraw
             balance = balance - amount;
-            return true;
+           
         
         }
     }

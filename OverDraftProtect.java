@@ -41,7 +41,7 @@ public class OverDraftProtect extends Checking
      * Method withdraw Menarik sejumlah Saldo dari Overdraft Account
      * @param amount Jumlah Saldo
      */
-    public boolean withdraw (double amount) {
+     public void withdraw (double amount) throws AmountOverDrawnException {
         if (( balance + savingsAccount.getBalance() ) - amount > 10) {
             if (amount > balance ) {
                 balance = balance - amount;
@@ -50,9 +50,9 @@ public class OverDraftProtect extends Checking
                 savingsAccount.withdraw(amount - balance);
                 feeAssessment();
             }
-            return true;
+            
         } else {
-            return false;
+            throw new AmountOverDrawnException (this);
         }
         
     }

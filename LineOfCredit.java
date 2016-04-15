@@ -44,7 +44,7 @@ public class LineOfCredit extends Checking {
      * Method withdraw digunakan untuk cek pernarikan saldo dari Line-of-Credit Account
      * @param amount jumlah saldo
      */
-    public boolean withdraw (double amount) {
+     public void withdraw (double amount) throws AmountOverDrawnException {
         if ( ( balance + creditBalance >= amount)) {
             if (balance >= amount) {
                 balance = balance - amount;
@@ -53,9 +53,9 @@ public class LineOfCredit extends Checking {
                 balance = 0;
                 feeAssessment();
             }
-            return true;
+           
         } else {
-            return false;
+            throw new AmountOverDrawnException (this);
         }
     }
     
