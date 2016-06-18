@@ -1,0 +1,80 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+/**
+ * Class ini dibentuk untuk mengatur pengimplementasian ActionLister dari ATM GUI.
+ * 
+ * @author Andira Rozawati
+ * @version 20 April 2016
+ */
+public class ButtonHandler implements ActionListener
+{
+   private ATMGUI gui;
+
+   private String newline = "\n\n";
+
+   
+   /**
+    * Constructor untuk kelas Button Handler
+    * @param gui sebagai objek gui yang akan digunakan.
+    */
+   public ButtonHandler(ATMGUI gui){
+       this.gui=gui;
+   }
+   
+   /**
+    * Method actionPerformed yang digunakan untuk memberikan aksi terhadap
+    * input yang dilakukan oleh customer.
+    * 
+    * @param event Sebagai event yang sedang dilakukan
+    */
+   public void actionPerformed(ActionEvent event){
+       JTextArea text = gui.text;
+       if(event.getActionCommand().equals("Deposit")){
+           if(locateAccount() != null)
+           {
+           depositAction(locateAccount(), gui.getNominal());
+       }
+       else if(event.getActionCommand().equals("Withdraw")){
+           text.append(newline + "Customer: " + gui.getID() +" withdraws amount of money:" + gui.getNominal());
+       }
+      else if(event.getActionCommand().equals("Exit")){
+           JOptionPane.showMessageDialog(null,"Thank you for your transaction and see you later ! ");
+            System.exit(0);
+        }
+    }
+    
+    }
+
+  
+    /**
+     * Method untuk mencari account sesuai input pada gui
+     * @return Account yang dicari
+     */
+    public Account locateAccount()
+    {
+        Account a = null;
+        Customer c = null;
+        try {
+            c = Bank.getCustomer(gui.getID());
+            try {
+                a = c.getAccount(gui.getAcctType());
+            } catch (AccountTypeNotFoundException notfound) {
+                gui.setText(notfound.getMessage());
+            }
+        } catch (NullPointerException e) {
+            gui.setText("Customer ID does not exist");
+        }
+        return a;
+    }
+     /**
+     * Method untuk melakukan deposit
+     * @param a Account
+     * @param amount Jumlah uang yang akan disimpan
+     */
+    public void depositAction(Account a, double amount) {
+        a.deposit(amount);
+        amountText.append(newline + "Customer: " + gui.getID() +" saves amount of money:" + gui.getNominal());
+    }
+    
+}

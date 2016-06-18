@@ -1,183 +1,291 @@
-
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.border.Border;
-import javax.swing.*;
 
+/**
+ * @author AndiraRozawati
+ * @version 
+ */
 
-public class ATMGUI extends JFrame {
+public class ATMGUI extends JFrame implements Runnable, FocusListener
+{
+   private JPanel topPanel;
+   private JPanel bottomPanel;
+   private JPanel buttonPanel;
+   private JPanel JRadioButtonPanel;
+   private JPanel infoPanel;
+   private JPanel textPanelOne;
+   private JPanel textPanelTwo;
+   private JLabel enterCustIDLabel;
+   private JTextField enterCustIDTextField;
+   private JLabel enterAmountHereLabel;
+   private JTextField enterAmountHereTextField;
+   private ButtonGroup group;
+   private JRadioButton savingsButton;
+   private JRadioButton InvestmentButton;
+   private JRadioButton LOCButton;
+   private JRadioButton OverdraftButton;
+   private JButton depositButton;
+   private JButton withdrawButton;
+   private JButton exitButton;
+   private JButton totalButton;
+   private JTextArea infoTextArea;
+   private JScrollPane vScroll;
+   private JScrollPane hScroll;
+   private ButtonHandler buttonHandler;
+   
+   public void run()
+   {
+   }
+   
+   /**
+    * Constructor for objects of class ATMGUI
+    */
+   public ATMGUI()
+   {
+      super("ATMGUI Layout");
+      buildGUI();
+   }
 
-	private JMenuBar menuBar;
-	private JButton button1;
-	private JButton button2;
-	private JButton button4;
-	private JLabel label1;
-	private JLabel label2;
-	private JRadioButton radiobutton2;
-	private JRadioButton radiobutton3;
-	private JRadioButton radiobutton4;
-	private JRadioButton radiobutton5;
-	private JTextArea textarea3;
-	private JTextField textfield1;
-	private JTextField textfield2;
+   /**
+    * Method fungsi untuk membuat GUI
+    */
+   private void buildGUI()
+   {
+        setSize(700,300);
+        setResizable(false);
+        setLayout(new GridLayout(2,1));
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowHandler(this) );        
+        makeTopPanel(); 
+        makeBottomPanel();            
+        add(topPanel);    
+        add(bottomPanel);
+        setVisible(true);  //menampilkan frame keseluruhan       
+   }
+    
+   /**
+    * Method fungsi untuk membuat top panel
+    * @param membuat tombol radio button
+    * @param membuat label "enter customer id"" dan textfieldnya
+    * @param membuat label "enter amount"" dan textfieldnya
+    * @param menambahkan setiap radio button ke buttonPanel
+    * @param memasukkan panel dan setiap komponen ke topPanel
+    */
+   private void makeTopPanel()
+   {    
+        JRadioButtonPanel = new JPanel(new GridLayout(4,1));
+        
+        savingsButton = new JRadioButton("Savings");
+        savingsButton.setToolTipText("<html>--" + "Savings" + "--<br> Untuk menyimpan uang standar dengan bunga dan balance non negatif" + "</html>");
+        savingsButton.setBackground(Color.WHITE);
+        
+        InvestmentButton = new JRadioButton("Investment");
+        InvestmentButton.setToolTipText("<html>--" + "Investment" + "--<br> Untuk menyimpan uang jangka panjang, minimal 6 bulan. <br>Penarikan prematur akan terkena penalti 20% dari jumlah yang ditarik." + "</html>");
+        InvestmentButton.setBackground(Color.WHITE);
+               
+        LOCButton     = new JRadioButton("Line Of Credit");
+        LOCButton.setToolTipText("<html>--" + "Line Of Credit" + "--<br> Untuk menyimpan uang dengan mengijinkan balance negatif <br> selama tidak melebihi credit limit" + "</html>");
+        LOCButton.setBackground(Color.WHITE);
+               
+        OverdraftButton = new JRadioButton("Overdraft");
+        OverdraftButton.setToolTipText("<html>--" + "Overdraft" + "--<br> Untuk menyimpan uang dengan terhubung ke akun Saving <br> mengijinkan penarikan melebihi balance akun ini selama <br> penarikan tidak melebihi total balance pada akun <br> saving yang terhubung. <br>Penarikan melebihi balance overdraft akan kena fee sebesar 3." + "</html>");
+        OverdraftButton.setBackground(Color.WHITE);
+               
+        group = new ButtonGroup();
+        group.add(savingsButton);
+        group.add(InvestmentButton);
+        group.add(LOCButton);
+        group.add(OverdraftButton);
 
-	//Constructor 
-	public ATMGUI(){
-
-		this.setTitle("ATMGUI");
-		this.setSize(796,440);
-		//menu generate method
-		
-		this.setJMenuBar(menuBar);
-
-		//pane with null layout
-		JPanel contentPane = new JPanel(null);
-		contentPane.setPreferredSize(new Dimension(796,440));
-		contentPane.setBackground(new Color(102,102,102));
-
-
-		button1 = new JButton();
-		button1.setBounds(612,130,95,58);
-		button1.setBackground(new Color(214,217,223));
-		button1.setForeground(new Color(0,0,0));
-		button1.setEnabled(true);
-		button1.setFont(new Font("sansserif",0,12));
-		button1.setText("Deposit");
-		button1.setVisible(true);
-
-		button2 = new JButton();
-		button2.setBounds(616,199,96,61);
-		button2.setBackground(new Color(214,217,223));
-		button2.setForeground(new Color(0,0,0));
-		button2.setEnabled(true);
-		button2.setFont(new Font("sansserif",0,12));
-		button2.setText("Withdraw");
-		button2.setVisible(true);
-
-		button4 = new JButton();
-		button4.setBounds(620,270,93,61);
-		button4.setBackground(new Color(214,217,223));
-		button4.setForeground(new Color(0,0,0));
-		button4.setEnabled(true);
-		button4.setFont(new Font("sansserif",0,12));
-		button4.setText("Exit");
-		button4.setVisible(true);
-
-		label1 = new JLabel();
-		label1.setBounds(9,34,108,27);
-		label1.setBackground(new Color(214,217,223));
-		label1.setForeground(new Color(0,0,0));
-		label1.setEnabled(true);
-		label1.setFont(new Font("sansserif",0,12));
-		label1.setText("Enter customer id");
-		label1.setVisible(true);
-
-		label2 = new JLabel();
-		label2.setBounds(441,35,104,24);
-		label2.setBackground(new Color(214,217,223));
-		label2.setForeground(new Color(0,0,0));
-		label2.setEnabled(true);
-		label2.setFont(new Font("sansserif",0,12));
-		label2.setText("Enter amount here");
-		label2.setVisible(true);
-
-		radiobutton2 = new JRadioButton();
-		radiobutton2.setBounds(219,11,90,35);
-		radiobutton2.setBackground(new Color(214,217,223));
-		radiobutton2.setForeground(new Color(0,0,0));
-		radiobutton2.setEnabled(true);
-		radiobutton2.setFont(new Font("sansserif",0,12));
-		radiobutton2.setText("Savings");
-		radiobutton2.setVisible(true);
-
-		radiobutton3 = new JRadioButton();
-		radiobutton3.setBounds(221,33,90,35);
-		radiobutton3.setBackground(new Color(214,217,223));
-		radiobutton3.setForeground(new Color(0,0,0));
-		radiobutton3.setEnabled(true);
-		radiobutton3.setFont(new Font("sansserif",0,12));
-		radiobutton3.setText("Investement");
-		radiobutton3.setVisible(true);
-
-		radiobutton4 = new JRadioButton();
-		radiobutton4.setBounds(223,50,100,35);
-		radiobutton4.setBackground(new Color(214,217,223));
-		radiobutton4.setForeground(new Color(0,0,0));
-		radiobutton4.setEnabled(true);
-		radiobutton4.setFont(new Font("sansserif",0,12));
-		radiobutton4.setText("Line of Credit");
-		radiobutton4.setVisible(true);
-
-		radiobutton5 = new JRadioButton();
-		radiobutton5.setBounds(223,70,90,35);
-		radiobutton5.setBackground(new Color(214,217,223));
-		radiobutton5.setForeground(new Color(0,0,0));
-		radiobutton5.setEnabled(true);
-		radiobutton5.setFont(new Font("sansserif",0,12));
-		radiobutton5.setText("Overdraft");
-		radiobutton5.setVisible(true);
-
-		textarea3 = new JTextArea();
-		textarea3.setBounds(5,132,592,265);
-		textarea3.setBackground(new Color(255,255,255));
-		textarea3.setForeground(new Color(0,0,0));
-		textarea3.setEnabled(true);
-		textarea3.setFont(new Font("sansserif",0,12));
-		textarea3.setText("Welcome");
-		textarea3.setBorder(BorderFactory.createBevelBorder(1));
-		textarea3.setVisible(true);
-
-		textfield1 = new JTextField();
-		textfield1.setBounds(110,36,104,24);
-		textfield1.setBackground(new Color(255,255,255));
-		textfield1.setForeground(new Color(0,0,0));
-		textfield1.setEnabled(true);
-		textfield1.setFont(new Font("sansserif",0,12));
-		textfield1.setText("");
-		textfield1.setVisible(true);
-
-		textfield2 = new JTextField();
-		textfield2.setBounds(553,34,116,26);
-		textfield2.setBackground(new Color(255,255,255));
-		textfield2.setForeground(new Color(0,0,0));
-		textfield2.setEnabled(true);
-		textfield2.setFont(new Font("sansserif",0,12));
-		textfield2.setText("");
-		textfield2.setVisible(true);
-
-		//adding components to contentPane panel
-		contentPane.add(button1);
-		contentPane.add(button2);
-		contentPane.add(button4);
-		contentPane.add(label1);
-		contentPane.add(label2);
-		contentPane.add(radiobutton2);
-		contentPane.add(radiobutton3);
-		contentPane.add(radiobutton4);
-		contentPane.add(radiobutton5);
-		contentPane.add(textarea3);
-		contentPane.add(textfield1);
-		contentPane.add(textfield2);
-
-		
-		this.add(contentPane);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.pack();
-		this.setVisible(true);
-	}
-
-	
-
-
-	 public static void main(String[] args){
-		System.setProperty("swing.defaultlaf", "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new ATMGUI();
-			}
-		});
-	}
-
+        enterCustIDLabel        = new JLabel("Enter Customer ID");
+        enterCustIDTextField    = new JTextField("",10);
+        enterCustIDTextField.setToolTipText("Enter Customer ID");
+        enterCustIDTextField.addFocusListener(this);
+        
+        enterAmountHereLabel        = new JLabel("Enter amount here");
+        enterAmountHereTextField    = new JTextField("0",10);
+        enterAmountHereTextField.setToolTipText("Enter amount here");
+        
+        JRadioButtonPanel.add(savingsButton);
+        JRadioButtonPanel.add(InvestmentButton);
+        JRadioButtonPanel.add(LOCButton);
+        JRadioButtonPanel.add(OverdraftButton);
+        
+        topPanel = new JPanel(new FlowLayout());
+        topPanel.setBackground(Color.WHITE);
+        topPanel.add(enterCustIDLabel);
+        topPanel.add(enterCustIDTextField);
+        topPanel.add(JRadioButtonPanel);
+        topPanel.add(enterAmountHereLabel);
+        topPanel.add(enterAmountHereTextField);
+   }
+    
+    /**
+     * Method fungsi untuk membuat bottom panel: tampilan bagian setengah ke bawah
+     * @param membuat buttonPanel dan memasukkan setiap button ke panel
+     * @param membuat textArea dan mengatur menjadi warna gray
+     * @param membuat bottomPanel dan memasukkan panel
+     */
+   private void makeBottomPanel()
+   {
+        buttonHandler = new ButtonHandler(this);
+        
+        depositButton = new JButton("Deposit");
+        depositButton.setActionCommand("deposit");
+        depositButton.addActionListener(buttonHandler);
+        
+        withdrawButton = new JButton("Withdraw");
+        withdrawButton.setActionCommand("withdraw");
+        withdrawButton.addActionListener(buttonHandler);
+        
+        exitButton     = new JButton("Exit");
+        exitButton.setActionCommand("exit");
+        exitButton.addActionListener(buttonHandler);
+        
+        totalButton     = new JButton("Total");
+        totalButton.setActionCommand("total");
+        totalButton.addActionListener(buttonHandler);
+        
+        buttonPanel   = new JPanel(new GridLayout(4,1));
+        buttonPanel.add(depositButton);
+        buttonPanel.add(withdrawButton);
+        buttonPanel.add(totalButton);
+        buttonPanel.add(exitButton);
+        
+        infoTextArea = new JTextArea("Welcome");
+        infoTextArea.setEditable(false);
+        infoTextArea.setBorder(BorderFactory.createLoweredBevelBorder());
+        infoTextArea.setBackground(Color.GRAY);
+        
+        bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setBackground(Color.GRAY);
+        bottomPanel.add(infoTextArea,BorderLayout.CENTER);
+        bottomPanel.add(buttonPanel,BorderLayout.LINE_END);    
+   }
+   
+   public void focusGained(FocusEvent e)
+   {  
+   }
+   
+   /**
+    * Method fungsi untuk melakukan fungsi tertentu bila focus hilang
+    */
+   public void focusLost(FocusEvent e)
+   {
+       if(!getCustIDText().equals(""))
+       {
+           try
+           {
+               setTextArea("Nama customer " + Bank.getCustomer(Integer.parseInt(getCustIDText())).getCustName());
+               setTextAreaColor(Color.WHITE);
+           }
+           catch(CustomerNotFoundException cnf)
+           {
+               setTextArea("Customer tidak ketemu");
+               setTextAreaColor(Color.WHITE);
+               warning("Customer tidak ketemu");
+           }
+           catch(NumberFormatException pe)
+           {
+               warning("Enter Customer ID tidak diisi dengan angka !!\n\nIsinya : " + enterCustIDTextField.getText() );
+               enterCustIDTextField.setText("");
+           }
+       }
+   }
+   
+   /**
+    * Method menampilkan dialog warning dengan message
+    */
+   private void warning(String s)
+   {
+       JOptionPane.showMessageDialog(this,s,"Error !!",JOptionPane.ERROR_MESSAGE);
+   }
+   
+   /**
+    * Method untuk mendapatkan ButtonGroup
+    */
+   public ButtonGroup getButtonGroup()
+   {
+       return group;
+   } 
+   
+   /**
+    * Method untuk mendapatkan custID
+    */
+   public String getCustIDText()
+   {
+       return enterCustIDTextField.getText();
+   }
+    
+   /**
+    * MEethod untuk mendapatkan cust ID dalam format angka
+    * @throws NumberFormatException
+    */
+   public int getCustID() throws NumberFormatException
+   {
+       try
+       {
+           return Integer.parseInt( enterCustIDTextField.getText());
+       }
+       catch(NumberFormatException e)
+       {
+           if(enterCustIDTextField.getText().equals(""))
+           {
+               throw new NumberFormatException("Enter Customer ID masih kosong!!");
+           }
+           else
+           {
+               throw new NumberFormatException("Enter Customer ID tidak diisi dengan angka !!\n\nIsinya : " + enterCustIDTextField.getText());
+           }
+       }       
+   }
+   
+   /**
+    * Method untuk mendapatkan amount
+    */
+   public String getAmountText()
+   {
+       return enterAmountHereTextField.getText();
+   }
+   
+   /**
+    * Method untuk mendapatkan amount dalam format angka
+    * @throws NumberFormatException
+    */
+   public double getAmount() throws NumberFormatException
+   {       
+       try
+       {
+           return Double.parseDouble( enterAmountHereTextField.getText());
+       }
+       catch(NumberFormatException e)
+       {
+           if(enterAmountHereTextField.getText().equals(""))
+           {
+               throw new NumberFormatException("Enter Amount masih kosong !!");
+           }
+           else
+           {
+               throw new NumberFormatException("Enter Amount tidak diisi dengan angka !!\n\nIsinya : " + enterAmountHereTextField.getText());
+           }
+       }
+   }
+   
+   /**
+    * Method fungsi untuk menset text area
+    */
+   public void setTextArea(String s)
+   {
+       infoTextArea.setText(s);
+   }
+   
+   /**
+    * Method fungsi untuk menset warna text area
+    */
+   public void setTextAreaColor(Color c)
+   {
+       infoTextArea.setBackground(c);
+   }  
 }

@@ -1,60 +1,54 @@
-
-
 /**
- * Write a description of class OverDraftProtection here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author andira
+ * @version 12-05-2016
  */
-public class OverDraftProtect extends Checking
-{
-    // instance variables - replace the example below with your own
-    private Savings savingsAccount;
 
+public class OverDraftProtect extends Checking 
+{
+    private Savings savingsAccount;
+    
     /**
-     * Constructor for objects of class OverDraftProtection
-     * @param cust customer yang memiliki account
-     * @param amount jumlah saldo 
-     * @param saveingsAccount account akan dimasukkan ke savings account
+     * Method Constructor dari OverDraftProtect
+     * @param cust Obyek Customer yang bersangkutan
+     * @param amount Jumlah saldo yang ingin dimasukkan
+     * @param save Obyek Savings Account sebagai acuan
      */
-    public OverDraftProtect(Customer cust, double amount, Savings savingsAccount)
+    public OverDraftProtect(Customer cust, double amount, Savings savingsAccount) 
     {
-        // initialise instance variables
         super();
-        id = Double.toString(cust.getCustID());
         balance = amount;
-       savingsAccount = savingsAccount;
+        this.savingsAccount = savingsAccount;
+        id = Integer.toString(cust.getCustID());
     }
     
     /**
      * Method feeAssessment Perhitungan biaya proteksi Overdraft
      */
-     public void feeAssessment()
-     {
-        
-        monthlyFee = monthlyFee -3;
-        balance = balance - 3;
+    public void feeAssessment() 
+    {
+        monthlyFee = monthlyFee + 3;
+        //balance = balance - monthlyFee;
     }
-
-     
+    
     /**
      * Method withdraw Menarik sejumlah Saldo dari Overdraft Account
      * @param amount Jumlah Saldo
      */
-     public void withdraw (double amount) throws AmountOverDrawnException {
-        if (( balance + savingsAccount.getBalance() ) - amount > 10) {
-            if (amount > balance ) {
-                balance = balance - amount;
-            } else {
-                balance = 0;
-                savingsAccount.withdraw(amount - balance);
-                feeAssessment();
-            }
-            
-        } else {
-            throw new AmountOverDrawnException (this);
+    public void withdraw(double amount) throws AmountOverDrawnException
+    {
+        if(amount > balance + savingsAccount.getBalance() - 10) 
+        {
+            throw new AmountOverDrawnException(this);
         }
-        
+        else if(amount > balance) 
+        {
+            savingsAccount.withdraw(amount - balance);
+            balance = 0;
+            feeAssessment();
+        }
+        else 
+        {
+            balance -= amount;
+        }
     }
-    
 }

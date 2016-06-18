@@ -1,40 +1,62 @@
-import java.util.*;
-import java.io.*;
+import java.lang.Exception;
+
 /**
- * Write a description of class AmountOverDrawnException here.
- * 
- * @Andirarozawati 
- * @4/14/2016
+ * class untuk error handling apabila saat mengambil uang saldo kurang
+ * @author andira
+ * @version 24-4-2016
  */
+
 public class AmountOverDrawnException extends Exception
 {
-    // instance variables - replace the example below with your own
-    protected Account acct;
-
+    private Account account;
+    private double p = 0;
+    
     /**
      * Constructor for objects of class AmountOverDrawnException
+     * @param acct Account
      */
-    public AmountOverDrawnException(Account acct)
+    public AmountOverDrawnException(Account account)
     {
-        // initialise instance variables
-        super("Insufficient Funds");
+        super("Insufficient funds");
+        this.account = account;
     }
-
+    
+    public AmountOverDrawnException(Account account , double i)
+    {
+        super("MAAF SANKSI PENALTI, penarikan ditambah 20% menjadi");
+        this.account = account;
+        p = i;
+    }
+    
+    /**
+     * Method to get error message
+     * @return Error message
+     */
     public String getMessage()
     {
-        if (acct instanceof Savings)
+        String message = super.getMessage() + " ";      
+        if(account instanceof Investment && p == 0)
         {
-            return super.getMessage()+"in Savings Account";}
-            else if (acct instanceof Investment)
-            {
-                return super.getMessage()+"in Investment Account";}
-            else if (acct instanceof LineOfCredit)
-            {
-                return super.getMessage()+"in Line-Of-Credit Account";}
-            else {
-                    return super.getMessage()+"in Overdrat Protection Account";
-                }
-            
-            
-            }
+            message += "In Investment Account , balance " + account.getBalance() ;
+        }        
+        if(account instanceof Investment && p != 0)
+        {
+            message += p + " , balance " + account.getBalance();
+        }        
+        if(account instanceof Savings && account instanceof Savings == false)
+        {
+            message += "In Savings Account , balance " + account.getBalance();
         }
+        else if(account instanceof LineOfCredit)
+        {
+            LineOfCredit l = (LineOfCredit)account;
+            double cr = l.getCreditLeft();
+            message += "In Line-Of-Credit Account , balance " + account.getBalance() +" , allowable credit left " + cr;
+        }
+        else if(account instanceof OverDraftProtect)
+        {
+            message += "In Overdraft Protection Account , balance " + account.getBalance();
+        }        
+        return message;
+    }
+}

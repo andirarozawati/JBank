@@ -1,79 +1,50 @@
-
-import java.text.*;
-import java.util.*;
-import java.io.*;
-import java.time.*;
-import java.lang.Math;
-import java.math.*;
-
 /**
- * Abstract class Savings - write a description of the class here
- * 
- * @author (your name here)
- * @version (version number or date here)
+ * @author andira
+ * @version 12-05-2016
  */
+
 public class Savings extends Account
 {
-    // instance variables - replace the example below with your own
-    
-    protected double interestEarned;
-    protected char acctType;
+    protected double interestEarned;    
     
     /**
-     * Method Constructor dari Savings
-     * @param cust customer account
-     * @param amount saldo yang ingin di input
+     * Constructor for objects of class Savings
      */
-    
-    public Savings (Customer cust, double amount)
+    public Savings(Customer cust, double amount)
     {
-      super();
-      id = Double.toString(cust.getCustID());
-      super.balance = amount;
-     
-      
+        super();
+        id   = Integer.toString(cust.getCustID());
+        balance   = amount;
     }
-   
-   
-  
+    
+    public void withdraw(double amount) throws AmountOverDrawnException
+    {
+        if(amount>=0&&amount<=balance)
+        {
+            balance-=amount;
+        }
+        else
+        {
+            throw new AmountOverDrawnException(this);           
+        }
+    }
+    
+    /**
+     * Method menghitung bunga
+     * @param 
+     */
+    public void addDailyInterest(int days)
+    { 
+        double interestRate = Bank.getPremiumRate();
+        System.out.println(interestRate);
+        double f = Math.pow( (1 + (interestRate/365)), days); 
+        System.out.println(f);                                           
+        interestEarned = balance * (f-1);             
+        balance *= f;                       
+    }
     
     public double getInterestEarned()
     {
         return interestEarned;
     }
-    
-     /**
-     * Method withdraw Mengambil uang dari account savings 
-     * @param amount jumlah saldo yang akan diambil 
-     */
-    public void withdraw (double amount) throws AmountOverDrawnException
-    {
-         
-        if (balance - amount < 0)//cek nilai withdraw apakah akan menghasilkan deposit yang negatif
-        {
-            throw new AmountOverDrawnException (this);
-        } 
-        else 
-        {//mengurangi balance saat withdraw
-            balance = balance - amount;
-           
-        
-        }
-    }
-    
-    /**
-     * Method addDailyInterest Menghitung fee yang didapatkan customer 
-     * @param numberOfDays Banyaknya hari
-     */
-    public void addDailyInterest(int days)
-    {
-      double f, periode;
-      int hari = 365;
-      periode = days/hari;
-      f = nilai(balance,0.03,360,periode);
-      interestEarned = f - balance;
-      balance = f;
-    }
-    
-  
 }

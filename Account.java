@@ -1,6 +1,7 @@
 import java.math.BigDecimal;
 import java.lang.Math;
 import java.math.MathContext;
+import java.io.*;
 
 /**
  * kelas account berisikan deskripsi atau informasi akun customer
@@ -8,33 +9,23 @@ import java.math.MathContext;
  * @author andirarozawati 
  * @version 27/02/2016
  */
-public abstract class Account
+public abstract class Account implements Serializable
 {
    /* private char acctType;*/
     protected double balance;
     protected String id;
     protected static MathContext mc = new MathContext(5);
-    protected char acctType;
+    private Customer account_owner;
    
     /*
    /**
      * constructur kelass account
      */
     /*
-    public Account(Customer customer,double amount,char tipe)
-    {
-        acctType = tipe;
+    public Account(double amount) {
         balance = amount;
-        id = customer.getCustID()+" "+ tipe;
-    }
- */
-    public String toString()
-    {
-     /* System.out.println("Tipe Akun = "+acctType);*/
-      System.out.println("ID = "+id);
-      System.out.println("Saldo = "+balance);
-      return "";  
-    }
+    }*/
+   
     /*
     /**
      * method pada costractor account
@@ -66,23 +57,18 @@ public abstract class Account
     }
     
     
-    /**
-     * method untuk mendapatkan tipe akun customer
-     * @return tipe akun
-     */
     
-    public char getAcctType()
-    {
-        return acctType;
+    
+    public String toString(){
+        return id;        
     }
     
-   
-    /**
-     * method untuk mendapatkan nilai balance customer
-     * @return nilai balance
+   /**
+     * Method to get balance value
+     * 
+     * @return balance in double
      */
-    public double getBalance()
-    {
+    public double getBalance() {
         return balance;
     }
     
